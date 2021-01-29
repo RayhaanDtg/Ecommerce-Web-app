@@ -1,0 +1,147 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+      {%include 'base/css.html'%}
+    {%include 'base/js.html'%}
+
+  </head>
+  <body>
+  {%include 'base/navbar.html' %}
+  <div class="container">
+{% block content %} {% endblock %}
+  {% block login %} {% endblock %}
+  {% block register %} {% endblock %}
+{%block contact%} {%endblock%}
+  {%block cart%} {%endblock cart%}
+  </div>
+<script>
+
+$(document).ready(function(){
+// search function
+var searchForm= $(".search-bar")
+var searchQuery= searchForm.find("[name='q']")
+var btn= searchForm.find("[type='submit']")
+var timerTyping;
+var timeInterval= 500;
+
+searchQuery.keyup(function(event){
+clearTimeout(timerTyping)
+timerTyping= setTimeout(searching,timeInterval)
+})
+
+searchQuery.keydown(function(event){
+clearTimeout(timerTyping)
+})
+
+function searchButton(){
+btn.addClass("disabled")
+btn.html("<i class='fa fa-spin fa-spinner'></i>Searching...")
+}
+
+function searching(){
+searchButton()
+query= searchQuery.val()
+setTimeout(function(){
+window.location.href= '/search/?q='+query
+},1000)
+}
+
+// cart + update
+var updateProduct= $(".updatecart")
+updateProduct.submit(function(event){
+event.preventDefault()
+var thisForm=$(this)
+var action= thisForm.attr("action")
+
+var httpMethod= thisForm.attr("method")
+var formData= thisForm.serialize()
+$.ajax({
+url:action,
+data:formData,
+method:httpMethod,
+success: function(data){
+console.log("data was sent")
+
+var submitSpan= thisForm.find(".submit-span")
+
+if (data.added){
+submitSpan.html("In Cart<button class='btn btn-warning my-2 my-sm-0'  type='submit'>Remove</button>");
+} else{
+submitSpan.html("<button class='btn btn-success my-2 my-sm-0'  type='submit'>Add to Cart</button>");
+}
+var countItems= $(".nav-count")
+countItems.text(data.items)
+
+var currentUrl= window.location.href
+if(currentUrl.indexOf("Cart")!=-1){
+refreshCart()
+}
+
+},
+error:function(errorData){
+console.log("Error happened")
+console.log(errorData)
+}
+})
+
+})
+function refreshCart(){
+var currentUrl= window.location.href
+var cartTable=$(".cartTable")
+var cartBody= cartTable.find(".cartBody")
+var cartRow= cartBody.find(".cart_row")
+var cartTotal=cartBody.find(".cart_total")
+var dataEndpoint= "api/cart_update/"
+var action="GET"
+var theData={}
+$.ajax({
+url: dataEndpoint,
+data:theData,
+method:action,
+success:function(data){
+var hiddenDiv=$(".remove_cart_item")
+if(data.products.length>0){
+cartRow.html("")
+var i=data.products.length
+
+
+$.each(data.products,function(index,value){
+var removeDiv= hiddenDiv.clone()
+removeDiv.css("display" , "block");
+ removeDiv.find(".remove_btn").val(value.id)
+
+console.log(removeDiv.html())
+cartBody.prepend("<tr><th scope=\"row\">"+ i+ "</th><td><a href="+ value.url+ ">"+ value.name+ "</a>"+ removeDiv.html()
++"</td><td> " + value.price+ "</td></tr>")
+console.log(index)
+i--
+})
+
+
+cartTotal.text(data.total)
+}
+else{
+window.location.href= currentUrl
+}
+
+
+},
+error: function(errorData){
+}
+
+})
+
+}
+})
+
+</script>
+
+
+
+  </body>
+</html>

@@ -1,0 +1,56 @@
+
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class='text-center'>
+      <h1>{{title}}</h1>
+       <h1>Hello, world!</h1>
+  </div>
+
+<div class="container-fluid">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+
+      <div class="item active">
+
+       <img src="{% static 'image/Assassins-Creed.jpg' %}" class='img-fluid' alt='Secret' style="width:100%;height:500px; " />
+        <div class="carousel-caption">
+          <h3>Los Angeles</h3>
+          <p>LA is always so much fun!</p>
+        </div>
+      </div>
+
+      <div class="item">
+               {% load static %}
+        <img src="{% static 'image/surf1.jpg' %}" class='img-fluid' alt='Surf' style="width:100%;height:500px; " />
+        <div class="carousel-caption">
+          <h3>Chicago</h3>
+          <p>Thank you, Chicago!</p>
+        </div>
+      </div>
+
+
+
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+    </div>
+
+{% endblock %}

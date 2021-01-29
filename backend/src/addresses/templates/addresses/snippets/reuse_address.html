@@ -1,0 +1,21 @@
+
+
+            Select from previous addresses <br>
+            <form method="post" action="{% url 'reuse_address' %}"> {% csrf_token %}
+                {%if next%}
+                 <input type="hidden" name="next" value='{{next}}' />
+                {%endif%}
+            {% for address in qs%}
+            <label for='address-{{address.id}}'>
+                <input type="radio" id="{{address.id}}" name="Address" value="{{address.id}}"/>
+
+                {{address.address_line_1}}
+
+            </label><br>
+
+            {%endfor%}
+                 <button type="submit" class="btn btn-default">Use Address</button>
+            </form>
+
+
+

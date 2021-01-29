@@ -1,0 +1,10 @@
+<form class="updatecart" method='POST' action= "{% url 'Cart:CartUpdate' %}" >  {% csrf_token %}
+
+<input class="remove_btn" type="hidden" name="product_id" value='{{product_id}}'>
+
+
+
+    <button class="btn btn-warning btn-sm"  type="submit">Remove</button>
+
+
+      </form>

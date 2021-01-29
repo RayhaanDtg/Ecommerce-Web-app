@@ -1,0 +1,12 @@
+ {% extends "Base.html" %}
+{%load static%}
+{%block login %}
+
+ <div class="container">
+     <h1 class="text-center">Login</h1>
+{%include   'accounts/snippets/form.html' with form=form next=next %}
+ </div>
+
+ {%endblock%}
+
+

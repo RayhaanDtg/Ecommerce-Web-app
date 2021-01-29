@@ -1,0 +1,67 @@
+{%extends "Base.html"%}
+{%block cart%}
+
+{{order.order_id}} -- {{order.cart}}
+{%if not billing %}
+
+ <div class="row text-center">
+        <div class="col-12">
+    <p class="lead">Login to continue</p>
+        <hr>
+{%include   'accounts/snippets/form.html' with form=form next=request.build_absolute_uri %}
+        </div>
+
+<div class="col-12">
+ {% url "guest_register" as guest_register%}
+     <hr>
+    <p class="lead" >Continue as Guest</p>
+
+{%include 'accounts/snippets/form.html' with form=guest  next=request.build_absolute_uri action_url=guest_register%}
+</div>
+    </div>
+
+{%else%}
+
+  {% if not order.address %}
+<p class="lead text-center"> Shipping Address</p>
+        <hr>
+    <div class="row text-center">
+        <div class="col-8">
+
+    {%include   'addresses/snippets/address_form.html' with form=address next=request.build_absolute_uri  %}
+              </div>
+
+    {% if qs%}
+         <div class="col-4">
+    {%include   'addresses/snippets/reuse_address.html' with qs=qs next=request.build_absolute_uri  %}
+
+</div>
+    {%endif%}
+    </div>
+
+
+
+
+    {%else%}
+
+<h1 class="text-center" >Check out</h1>
+<p class="text-center"> Cart total = {{order.cart.total}}</p>
+<p class="text-center"> Shipping total = {{order.shipping_total}}</p>
+<p class="text-center">Order total = {{order.order_total}}</p>
+<div class="text-center">
+    <form method='post' action=" "> {% csrf_token %}
+<button type="submit" class="btn btn-primary">Finalize Checkout</button>
+</form>
+</div>
+
+{%endif%}
+    {%endif%}
+
+
+
+
+
+
+{%endblock cart%}
+
+
