@@ -1,0 +1,112 @@
+
+  <section class="u-clearfix u-section-1" id="sec-9ae9">
+    <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
+      <div class="u-layout">
+        <div class="u-layout-col">
+          <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-1">
+            <div class="u-container-layout u-container-layout-1">
+              
+              <mat-card>
+                
+                  <mat-card-title color="accent">Account Info</mat-card-title>
+           
+               
+                <mat-card-content>
+                  <form class="example-form" [formGroup]="userForm ">
+                    <fieldset [disabled]="isDisabledUser">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Email </mat-label>
+                      <input matInput disabled value={{user.email}} >
+                    </mat-form-field>
+                    <br>
+                    <br>
+                  
+                    <table class="example-full-width" cellspacing="0"><tr>
+                      <td><mat-form-field class="example-full-width">
+                        <mat-label>First Name </mat-label>
+                        <input matInput disabled value={{user.first_name}}>
+                      </mat-form-field></td>
+                      <td><mat-form-field class="example-full-width">
+                        <mat-label>Last Name </mat-label>
+                        
+                        <input matInput disabled value={{user.last_name}}>
+                      </mat-form-field></td>
+                    </tr></table>
+                    <br>
+                    <br>
+                    
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Telephone number </mat-label>
+                      <input matInput  value={{address.phone_number}} formControlName="phone_number" >
+                    </mat-form-field>
+                  
+                   
+                  
+                    </fieldset>
+                  </form>
+                </mat-card-content>
+                <button class="edit" (click)="editUser()"  mat-raised-button color="accent">edit</button>
+                  
+              </mat-card>
+              <!-- <button class="save" (click)="saveData()" mat-raised-button >Save</button> -->
+            </div>
+          </div>
+         <mat-divider></mat-divider>
+          <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-2">
+            <div class="u-container-layout u-valign-top u-container-layout-2">
+             
+              <mat-card>
+                <mat-card-title >Shipping Info</mat-card-title>
+                <mat-card-content>
+                  <form [formGroup]="shippingForm " class="example-form">
+                   
+                    <fieldset [disabled]="isDisabledShip">
+                    
+                  
+                    <p>
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Address Line 1</mat-label>
+                        
+                       <input matInput value={{address.address_line_1}} formControlName="address_line_1">
+                        <!-- <textarea matInput >{{address.address_line_1}}</textarea> -->
+                      </mat-form-field>
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Address Line 2 </mat-label>
+                        <input matInput value={{address.address_line_2}} formControlName="address_line_2">
+                        <!-- <textarea matInput>{{address.address_line_2}}</textarea> -->
+                      </mat-form-field>
+                    </p>
+                  
+                    <table class="example-full-width" cellspacing="0"><tr>
+                      <td><mat-form-field class="example-full-width">
+                        <mat-label>City </mat-label>
+                        
+                        <input matInput value={{address.city}} formControlName="city">
+                      </mat-form-field></td>
+                      <td><mat-form-field class="example-full-width">
+                        <mat-label>State </mat-label>
+                        <input matInput value={{address.state}}  formControlName="state">
+                      </mat-form-field></td>
+                      
+                    </tr></table>
+                    </fieldset>
+                  </form>
+                </mat-card-content>
+               <button class="edit" (click)="editShipping()" mat-raised-button color="accent">edit</button>
+               <button class="save" (click)="saveData()" mat-raised-button >Save</button>
+              </mat-card>
+            </div>
+            
+          </div>
+          <!-- <button class="save" (click)="saveData()" mat-raised-button >Save</button> -->
+        </div>
+      </div>
+    </div>
+
+  </section>
+  
+ <!-- Footer -->
+ <app-footer></app-footer>
+
+
+<!-- Footer -->

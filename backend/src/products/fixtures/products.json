@@ -1,0 +1,50 @@
+[
+{
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+        "title": "T-shirt",
+        "slug": "t-shirt",
+        "description": "Blink T-shirt",
+        "price": "10.00",
+        "image": "products/862347944794.jpg",
+        "InStock": false
+    }
+},
+{
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+        "title": "Jeans",
+        "slug": "jeans",
+        "description": "Denim Jeans",
+        "price": "10.00",
+        "image": "products/420733363336.PNG",
+        "InStock": false
+    }
+},
+{
+    "model": "products.product",
+    "pk": 5,
+    "fields": {
+        "title": "Car",
+        "slug": "car",
+        "description": "Added new car\r\nThis is a mustang",
+        "price": "10.00",
+        "image": "products/207050245024.PNG",
+        "InStock": true
+    }
+},
+{
+    "model": "products.product",
+    "pk": 9,
+    "fields": {
+        "title": "Computer",
+        "slug": "computer",
+        "description": "This is a supercomputer",
+        "price": "10.00",
+        "image": "products/624071157115.webp",
+        "InStock": true
+    }
+}
+]

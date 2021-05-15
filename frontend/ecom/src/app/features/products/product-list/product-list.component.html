@@ -1,0 +1,54 @@
+
+
+
+<div class="container ">
+    
+    <hr>
+    <div  id="products" class="row  ">
+        <div class="item col-4" *ngFor="let product of products">
+            <mat-card>
+            <!-- <div class="thumbnail"> -->
+                <img class="group list-group-image" src="http://127.0.0.1:8000{{product.image}}" alt="" style="width: 25rem; height:25rem;" />
+                <div class="caption">
+                    <h4 class="group inner list-group-item-heading">
+                        {{product.title}}</h4>
+                    <p class="group inner list-group-item-text">
+                        {{product.description}}</p>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <p class="lead">
+                                ${{product.price}}</p>
+                        </div>
+                           
+                       
+
+                        <div class="col-xs-12 col-md-6"  >
+                            <!-- <div class="row">
+                                <button *ngIf=!product.existInCart class="btn btn-success add" (click)="addProductToCart(product)">Add to Cart</button>
+                                <button  *ngIf=product.existInCart class="btn btn-warning remove" (click)="removeFromCart(product)">Remove</button>
+                            </div> -->
+                            
+                            <div class="row">
+                                <button  class="btn btn-primary" (click)="changeSlug(product.slug)" routerLink="/product-detail" >view</button>
+                            </div>
+                           
+                        </div>
+                        
+                    </div>
+                </div>
+            <!-- </div> -->
+          
+        </mat-card>
+        <hr>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<app-footer></app-footer>
+
+
+<!-- Footer -->
+
+  
+

@@ -3,6 +3,11 @@ from django.conf import settings
 from products.models import Product
 from django.db.models.signals import m2m_changed
 from rest_framework import serializers
+from CartItem.models import CartItem
+from stock.models import Stock
+import decimal
+
+# from account.models import User
 
 User = settings.AUTH_USER_MODEL
 
@@ -10,6 +15,18 @@ User = settings.AUTH_USER_MODEL
 # creates a custom Manager object
 
 class CartManager(models.Manager):
+
+
+    def retrieve_or_create(self,user):
+        qs=self.get_queryset().filter(user=user,isActive=True)
+        if qs.count() == 1:
+            cart_obj=qs.first()
+        else:
+            cart_obj=self.model.objects.create(user=user)
+            cart_obj.isActive=True
+            cart_obj.save()
+        return cart_obj
+
     # checks if a cart already exists by getting the cart id of the session
     # retrieves the carts based on the id
     # if there is a user which is authenticated and the user associated to the cart is None,
@@ -43,61 +60,100 @@ class CartManager(models.Manager):
                 user_obj = user
         return self.model.objects.create(user=user_obj)
 
-    # function in view that is called when update cart url is requested.
-    # gets the product ID of the request
-    # if product is in the cart, remove it, else add it.
-    # after the function is executed, redirects to the cart page
-    def update_cart(self, request):
-        added = False
-        count = 0
-        product_id = request.POST.get("product_id")
+    
+    # gets the cart for a specific user.
+    # creates or updates a cart_item for a specific cart
+    # also updates the total of the cart
 
-        if product_id is not None:
-            try:
-                product_obj = Product.objects.get(id=product_id)
-            except Product.DoesNotExist:
-                print("Product does not exist")
-                return added
+    def update_cart_1(self,product,user,qty,price):
+        cart_obj=Cart.objects.retrieve_or_create(user=user)
+        cart_item=CartItem.objects.retrieve_or_create(cart=cart_obj,product=product)
+        cart_item.qty=qty
+        cart_item.subtotal=price*decimal.Decimal(qty)
+        cart_item.save()
+        qs_cart_items=CartItem.objects.get_list_cart_items(cart=cart_obj)
+        cart_final_obj=self.update_cart_total(cart=cart_obj)
+        return cart_final_obj
+    
+    def update_cart_total(self,cart):
+        qs_cart_items=CartItem.objects.get_list_cart_items(cart=cart)
+        cart.total=0
+        for x in qs_cart_items:
+            cart.total= decimal.Decimal(cart.total)+ x.subtotal
+        cart.save()
+        return cart
 
-            cart_obj, new_obj = self.new_or_create(request)
-            if product_obj not in cart_obj.products.all():
-                cart_obj.products.add(product_obj)
-                count = cart_obj.products.count()
+    
 
-                added = True
 
-            else:
-                cart_obj.products.remove(product_obj)
-                count = cart_obj.products.count()
-                added = False
+    
+    
 
-            return added, count
+
+
+   
+
+    # # function in view that is called when update cart url is requested.
+    # # gets the product ID of the request
+    # # if product is in the cart, remove it, else add it.
+    # # after the function is executed, redirects to the cart page
+    # def update_cart(self, request):
+    #     added = False
+    #     count = 0
+    #     product_id = request.POST.get("product_id")
+
+    #     if product_id is not None:
+    #         try:
+    #             product_obj = Product.objects.get(id=product_id)
+    #         except Product.DoesNotExist:
+    #             print("Product does not exist")
+    #             return added
+
+    #         cart_obj, new_obj = self.new_or_create(request)
+    #         if product_obj not in cart_obj.products.all():
+    #             cart_obj.products.add(product_obj)
+    #             count = cart_obj.products.count()
+
+    #             added = True
+
+    #         else:
+    #             cart_obj.products.remove(product_obj)
+    #             count = cart_obj.products.count()
+    #             added = False
+
+    #         return added, count
+
 
 
 class Cart(models.Model):
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
-    products = models.ManyToManyField(Product, blank=True)
+    # products = models.ManyToManyField(CartItem, blank=True)
     total = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
     updated = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
+    isActive=models.BooleanField(default=False)
     objects = CartManager()
 
     def __str__(self):
         return str(self.id)
+
+   
+
+
 
 
 # function that is taken as argument in the m2m_changed.connect
 # everytime many to many relationship is changed (many products in carts) is changed
 # and action is taken, the function takes the sender as the products in the cart
 # based on the changes, it then updates the total of the cart
-def update_total(sender, instance, action, *args, **kwargs):
-    if action == 'post_add' or action == 'post_remove' or action == 'post_clear':
-        products = instance.products.all()
-        total = 0
-        for p in products:
-            total = total + p.price
-        instance.total = total
-        instance.save()
+# def update_total(sender, instance, action, *args, **kwargs):
+#     if action == 'post_add' or action == 'post_remove' or action == 'post_clear':
+#         products = instance.products.all()
+#         total = 0
+#         for p in products:
+#             total = total + (p.sub * p.qty)
+#         instance.total = total
+#         instance.save()
 
 
-m2m_changed.connect(update_total, sender=Cart.products.through)
+# m2m_changed.connect(update_total, sender=Cart.products.through)

@@ -8,9 +8,9 @@ class AddressForm(ModelForm):
         fields = [
 
             'address_line_1',
+            'address_line_2',
             'city',
             'state',
-            'zip_code',
-            'country'
-
+          
+            
         ]

@@ -7,6 +7,7 @@ from addresses.models import Address
 from django.db.models import signals
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
+import datetime
 
 from .utils import unique_order_generator
 
@@ -47,11 +48,12 @@ class OrderManager(models.Manager):
 class Order(models.Model):
     billing_profile = models.ForeignKey(BillingProfile, on_delete=models.CASCADE, null=True, blank=True)
     address = models.ForeignKey(Address, on_delete=models.CASCADE, null=True, blank=True)
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    cart = models.OneToOneField(Cart, on_delete=models.CASCADE)
     status = models.CharField(max_length=20, choices=ORDER_STATUS_CHOICES, default="created")
     shipping_total = models.DecimalField(default=10.00, max_digits=100, decimal_places=2)
     order_total = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
     order_id = models.CharField(max_length=120, blank=True)
+    created =  models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
 
     objects = OrderManager()

@@ -1,0 +1,66 @@
+
+
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+    <mat-card class="box">
+      <mat-card-header>
+        <mat-card-title>Register</mat-card-title>
+      </mat-card-header>
+  
+      <form [formGroup]="registerForm " (ngSubmit)="onSubmit()" class="example-form">
+  
+        <mat-card-content>
+          <mat-form-field class="example-full-width">
+            <input matInput  placeholder="firstname"
+            formControlName="firstname">
+            <mat-error *ngIf="firstname && firstname.invalid && (firstname.dirty ||firstname.touched)">
+                        
+                Only alphabets and minimum length is 20 Characters 
+           
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="last name" formControlName="lastname">
+            <mat-error *ngIf="lastname && lastname.invalid && (lastname.dirty ||lastname.touched)">
+                        
+                Only alphabets and minimum length is 20 Characters 
+           
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Email" formControlName="email">
+            <mat-error *ngIf="email && email.invalid && (email.dirty ||email.touched) ">
+                        
+                Enter a valid email address
+           
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field class="example-full-width">
+            <input matInput type="password" placeholder="Password" formControlName="password">
+            <mat-error *ngIf="password && password.invalid && (password.dirty ||password.touched) ">
+                        
+             minimum is 4 characters
+         
+          </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field class="example-full-width">
+            <input matInput type="password" placeholder="Confirm Password">
+          </mat-form-field>
+  
+        </mat-card-content>
+  
+        <button mat-stroked-button color="accent" class="btn-block" type="submit" [disabled]="registerForm.invalid">Register</button>
+  
+      </form>
+    </mat-card>
+  </div>
+
+<!-- Footer -->
+<app-footer></app-footer>
+
+
+<!-- Footer -->
+
+

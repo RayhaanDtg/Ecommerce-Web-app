@@ -28,7 +28,7 @@ def get_filename(filepath):
 def upload_img(instance, filepath):
     new_filename = random.randint(0, 10000)
     name, ext = get_filename(filepath)
-    final = '{new_filename}{ext}'.format(new_filename=new_filename, ext=ext)
+    final = '{new_filename}{ext}'.format(new_filename=name, ext=ext)
     return "products/{new_filename}{final}".format(new_filename=new_filename, final=final)
 
 
@@ -47,6 +47,12 @@ class ProductQuerySet(models.QuerySet):
         print(lookups)
         qs = self.filter(lookups)
         print(qs.query)
+        return qs
+
+    def get_product_by_slug(self,slug):
+        qs= self.filter(slug=slug)
+        print('stock function')
+        print(qs)
         return qs
 
 
@@ -68,6 +74,17 @@ class ProductManager(models.Manager):
         else:
             return None
 
+    def get_by_slug(self,slug):
+
+        qs=self.get_queryset().get_product_by_slug(slug=slug)
+        if qs.count()>=1:
+            instance=qs.first()
+            print('stock function 2')
+            print(instance)
+            return instance
+        else:
+            return None
+
     def get_search(self, query):
         qs = self.get_queryset().searched(query)
         print(qs.query)
@@ -83,7 +100,8 @@ class Product(models.Model):
     title = models.CharField(max_length=120)
     slug = models.SlugField(unique=True, blank=True)
     description = models.TextField()
-    price = models.DecimalField(max_digits=20, default=0.00, decimal_places=2)
+   
+    
     image = models.ImageField(upload_to=upload_img, null=True, blank=True)
     objects = ProductManager()
     InStock = models.BooleanField(default=False)
