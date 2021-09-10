@@ -93,36 +93,6 @@ class CartManager(models.Manager):
 
    
 
-    # # function in view that is called when update cart url is requested.
-    # # gets the product ID of the request
-    # # if product is in the cart, remove it, else add it.
-    # # after the function is executed, redirects to the cart page
-    # def update_cart(self, request):
-    #     added = False
-    #     count = 0
-    #     product_id = request.POST.get("product_id")
-
-    #     if product_id is not None:
-    #         try:
-    #             product_obj = Product.objects.get(id=product_id)
-    #         except Product.DoesNotExist:
-    #             print("Product does not exist")
-    #             return added
-
-    #         cart_obj, new_obj = self.new_or_create(request)
-    #         if product_obj not in cart_obj.products.all():
-    #             cart_obj.products.add(product_obj)
-    #             count = cart_obj.products.count()
-
-    #             added = True
-
-    #         else:
-    #             cart_obj.products.remove(product_obj)
-    #             count = cart_obj.products.count()
-    #             added = False
-
-    #         return added, count
-
 
 
 class Cart(models.Model):

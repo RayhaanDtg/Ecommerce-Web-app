@@ -1,6 +1,26 @@
-.header{
-    background-color: darkseagreen;
-}
+
 table {
     width: 100%;
+    border-radius: 15px;
   }
+.row{
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+mat-card{
+    margin-left: 50%;
+    border-radius: 15px;
+    border-color: blueviolet;
+   
+   
+}
+.mat-card-header{
+    background-color: cornsilk;
+}
+.cartRow{
+    padding-top: 2.5px;
+    padding-bottom: 2.5px;
+}
+th{
+    background-color: cornsilk;
+}

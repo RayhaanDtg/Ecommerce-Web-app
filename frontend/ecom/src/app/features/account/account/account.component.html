@@ -98,6 +98,81 @@
             </div>
             
           </div>
+          <mat-divider></mat-divider>
+          <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-2">
+            <div class="u-container-layout u-valign-top u-container-layout-2">
+             
+              <mat-card>
+                <mat-card-title >Payment Info</mat-card-title>
+                <mat-card-content>
+                  <form [formGroup]="paymentForm " class="example-form">
+                   
+                    <fieldset [disabled]="isDisabledPay">
+                    
+                  
+                    <p>
+                      <mat-form-field appearance="fill">
+                        <mat-label>
+                          Payment Method
+                                                  
+                        </mat-label>
+                        <mat-select formControlName="methodPayment">
+                          <mat-option *ngFor="let type of typePay" [value]="type">
+                           {{type}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Cardholder Name </mat-label>
+                        <input matInput value={{paymentData.card_name}} formControlName="cardName">
+                   
+                      </mat-form-field>
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Card Number </mat-label>
+                        <input matInput value={{paymentData.card_number}} formControlName="cardNumber">
+                   
+                      </mat-form-field>
+                    
+                    </p>
+                    <table class="example-full-width" cellspacing="0"><tr>
+                      <td> <mat-form-field appearance="fill">
+                        <mat-label>
+                          Expiration Month
+                                                  
+                        </mat-label>
+                        <mat-select formControlName="expMonth">
+                          <mat-option *ngFor="let month of months" [value]="month">
+                           {{month}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field></td>
+                      <td><mat-form-field appearance="fill">
+                        <mat-label>
+                          Expiration Year
+                         
+                                                                          
+                        </mat-label>
+                        <mat-select formControlName="expYear">
+                          <mat-option *ngFor="let year of years" [value]="year">
+                           {{year}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field></td>
+                      <td><mat-form-field class="example-full-width">
+                        <mat-label>Security Code </mat-label>
+                        <input matInput value="" >
+                      </mat-form-field></td>
+                    </tr></table>
+                  
+                    </fieldset>
+                  </form>
+                </mat-card-content>
+               <button class="edit" (click)="editPayment()" mat-raised-button color="accent">edit</button>
+               <button class="save" (click)="saveData()" mat-raised-button >Save</button>
+              </mat-card>
+            </div>
+            
+          </div>
           <!-- <button class="save" (click)="saveData()" mat-raised-button >Save</button> -->
         </div>
       </div>
