@@ -67,6 +67,13 @@ export interface Address{
     billing_profile:number;
     id:number;
 }
+export interface Payment{
+    method:string;
+    card_name:string;
+    card_number:number;
+    expMonth:number;
+    expYear:number
+}
 // export interface User{
 //     username: string;
 //     firstname:string;

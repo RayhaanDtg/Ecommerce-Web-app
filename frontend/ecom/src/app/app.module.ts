@@ -24,7 +24,14 @@ import { JwtInterceptorService } from 'src/app/shared/helpers/jwt-interceptor.se
 import { ErrorInterceptorService } from 'src/app/shared/helpers/error-interceptor.service';
 
 import { AccountComponent } from './features/account/account/account.component';
-import { FooterComponent } from './features/footer/footer/footer.component'
+import { FooterComponent } from './features/footer/footer/footer.component';
+import { HomeComponent } from './features/dashboard/home/home.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { LayoutModule } from '@angular/cdk/layout'
 
 @NgModule({
   declarations: [
@@ -39,6 +46,7 @@ import { FooterComponent } from './features/footer/footer/footer.component'
    
     AccountComponent,
     FooterComponent,
+    HomeComponent,
     
   ],
   imports: [
@@ -49,7 +57,13 @@ import { FooterComponent } from './features/footer/footer/footer.component'
     ReactiveFormsModule,
     BrowserAnimationsModule,
     AngularMaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatGridListModule,
+    MatCardModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    LayoutModule
   ],
   providers: [ 
     { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [UserService] },

@@ -15,7 +15,7 @@ export class CartComponent implements OnInit {
 public cartItems:CartItem[];
 public user: UserData;
 public cart:Cart;
-displayedColumns: string[] = ['product', 'qty', 'subtotal','remove'];
+displayedColumns: string[] = ['product',  'qty', 'subtotal','remove'];
 // public products: Product[];
 
   constructor(private cartService:CartService,private authenticationService: UserService) { 
